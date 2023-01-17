@@ -1,25 +1,40 @@
-interface Student {
-    firstName: string;
-    lastName: string;
-    age: number;
-    location: string;
+interface Teacher {
+  firstName: string;
+  lastName: string;
+  fullTimeEmployee: boolean;
+  yearsOfExperience?: number;
+  location: string;
+  [attribute: string]: any;
 }
 
-const student1 = { firstName: 'Bob', lastName: 'Barker', age: 2035, location: 'Oklahoma' };
-const student2 = { firstName: 'George', lastName: 'Bush', age: 123, location: 'Texas' };
-const studentsList : Array<Student> = [student1, student2];
+interface Directors extends Teacher {
+  numberOfReports: number;
+}
 
-function CreateTable(table: HTMLTableElement, studentsList: Array<Student>) {
-  for (const student of studentsList) {
-    let row = table.insertRow();
-    const firstName = row.insertCell();
-    const location = row.insertCell();
-    firstName.innerHTML = student.firstName;
-    location.innerHTML = student.location;
+function printTeacher(firstName: string, lastName: string): string {
+  return `${firstName.charAt(0)}. ${lastName}`
+}
+
+interface printTeacherFunction {
+  func: (firstName: string, lastName: string) => string;
+}
+
+class StudentClass {
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
-  document.body.appendChild(table);
+
+  workOnHomework(): string {
+    return 'Currently working';
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+
+
 }
-let table = document.createElement('table');
-CreateTable(table, studentsList);
-
-
