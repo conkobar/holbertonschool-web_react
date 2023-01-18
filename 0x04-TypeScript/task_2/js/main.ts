@@ -41,3 +41,29 @@ function createEmployee(salary: number | string): Director | Teacher {
     return new Director;
   }
 }
+
+function isDirector(employee: Teacher | Director) {
+  if (employee instanceof Director) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function executeWork(employee: Teacher | Director) {
+  if (employee instanceof Director) {
+    return employee.workDirectorTasks();
+  } else {
+    return employee.workTeacherTasks();
+  }
+}
+
+type Subjects = 'Math' | 'History';
+
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === 'Math') {
+    return 'Teaching math';
+  } else if (todayClass === 'History') {
+    return 'Teaching history';
+  }
+}
