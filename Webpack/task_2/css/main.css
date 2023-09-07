@@ -1,0 +1,19 @@
+/* Style for the button */
+#myButton {
+  float: left;
+  margin-right: 20px;
+}
+
+/* Style for the counter text */
+#count {
+  float: left;
+  font-weight: bold;
+}
+
+/* Style for the logo */
+#logo {
+  background: url('../assets/holberton-logo.jpg');
+  width: 200px;
+  height: 200px;
+  background-size: 200px 200px;
+}
