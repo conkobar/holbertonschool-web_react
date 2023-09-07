@@ -1,0 +1,11 @@
+/* Style for the button */
+#clickButton {
+  float: left;
+  margin-right: 20px;
+}
+
+/* Style for the counter text */
+#count {
+  float: left;
+  font-weight: bold;
+}
