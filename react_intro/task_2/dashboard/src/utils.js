@@ -5,4 +5,8 @@ const getFullYear = () => new Date().getFullYear();
 const getFooterCopy = (isIndex) =>
   'Holberton School' ? isIndex : 'Holberton School main dashboard';
 
-export { getFullYear, getFooterCopy };
+// returns most recent notification
+const getLatestNotification = () =>
+  '<strong>Urgent requirement</strong> - complete by EOD';
+
+export { getFullYear, getFooterCopy, getLatestNotification };
