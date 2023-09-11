@@ -2,7 +2,7 @@
   "name": "dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://conkobar.github.io/holberton-web_react/",
+  "homepage": "https://conkobar.github.io/holberton-web_react/react_intro",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
