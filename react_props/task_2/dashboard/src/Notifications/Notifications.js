@@ -22,10 +22,16 @@ export default function Notifications() {
 
         <p>Here is the list of notifications</p>
         <ul>
-          <NotificationItem data='default' value='New course available' />
-          <NotificationItem data='urgent' value='New resume available' />
           <NotificationItem
-            data='urgent'
+            type='default'
+            value='New course available'
+          />
+          <NotificationItem
+            type='urgent'
+            value='New resume available'
+          />
+          <NotificationItem
+            type='urgent'
             html={{ __html: getLatestNotification() }}
           />
         </ul>
