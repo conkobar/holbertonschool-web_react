@@ -8,6 +8,8 @@ import Login from '../Login/Login';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import BodySection from '../BodySection/BodySection';
 
 // create listNotifications array
 const listNotifications = [
@@ -76,7 +78,12 @@ class App extends React.Component {
           <Header />
         </div>
         <div className='App-body'>
-          {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+          <BodySectionWithMarginBottom
+            title={isLoggedIn ? 'Course list' : 'Log in to continue'}
+          >
+            {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+          </BodySectionWithMarginBottom>
+          <BodySection title='News from the school' />
         </div>
         <Footer />
       </>
