@@ -1,23 +1,31 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Login from './Login';
+import { StyleSheetTestUtils } from 'aphrodite';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('Login Component', () => {
-  it('renders without crashing', () => {
-    const comp = mount(<Login />);
-    expect(comp.exists()).toBe(true);
+  let wrapper;
+
+  // Re-creates wrapper before each test to prevent side-effects or
+  // interference between tests
+  beforeEach(() => {
+    wrapper = mount(<Login />);
   });
 
-  it('renders 2 inputs and 2 labels', () => {
-    const comp = mount(<Login />);
-    comp.update();
+  // Test that Footer renders without crashing
+  it('renders without crashing', () => {
+    expect(wrapper.exists()).toBe(true);
+  });
 
-    // check inputs
-    const inputs = comp.find('input');
-    expect(inputs.length).toBe(2);
+  // Test that Footer renders 2 input & 2 label tags
+  it('renders the copyright string', () => {
+    wrapper.update();
+    const inputItems = wrapper.find('input');
+    expect(inputItems.length).toBe(2);
 
-    // check labels
-    const labels = comp.find('label');
-    expect(labels.length).toBe(2);
+    const labelItems = wrapper.find('label');
+    expect(labelItems.length).toBe(2);
   });
 });

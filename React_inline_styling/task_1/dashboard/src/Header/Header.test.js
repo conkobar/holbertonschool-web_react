@@ -1,23 +1,31 @@
 import React from 'react';
-import Header from './Header';
 import { mount } from 'enzyme';
+import Header from './Header';
+import { StyleSheetTestUtils } from 'aphrodite';
 
-describe('Header', () => {
-  it('renders without crashing', () => {
-    const comp = mount(<Header />);
-    expect(comp.exists()).toBe(true);
+StyleSheetTestUtils.suppressStyleInjection();
+
+describe('Header Component', () => {
+  let wrapper;
+
+  // Re-creates wrapper before each test to prevent side-effects or
+  // interference between tests
+  beforeEach(() => {
+    wrapper = mount(<Header />);
   });
 
+  // Test that Header renders without crashing
+  it('renders without crashing', () => {
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  // Test that Header renders img and h1 tags
   it('renders img and h1 tags', () => {
-    const comp = mount(<Header />);
-    comp.update();
+    wrapper.update();
+    const imgItems = wrapper.find('img');
+    expect(imgItems.exists()).toBe(true);
 
-    // check imgs
-    const imgs = comp.find('img');
-    expect(imgs.exists()).toBe(true);
-
-    // check h1s
-    const aychOnes = comp.find('h1');
-    expect(aychOnes.exists()).toBe(true);
+    const h1Items = wrapper.find('h1');
+    expect(h1Items.exists()).toBe(true);
   });
 });

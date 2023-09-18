@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
 // import components
 import Notifications from '../Notifications/Notifications';
@@ -71,21 +72,24 @@ class App extends React.Component {
 
   render() {
     const { isLoggedIn, logOut } = this.props;
+    // Added key={this.props.isLoggedIn} to force re-render of Notifications component
+    // This is only necessary because we have the shouldComponentUpdate method in notifications for a different task
+    // Also added displayDrawer={isLoggedIn} to tie notifications to isLoggedIn
     return (
       <>
-        <div className='header'>
-          <Notifications listNotifications={listNotifications} />
+        <div className={`App-header ${css(styles.header)}`}>
+          <Notifications
+            key={this.props.isLoggedIn}
+            listNotifications={listNotifications}
+            displayDrawer={isLoggedIn}
+          />
           <Header />
         </div>
-        <div className='App-body'>
-          <BodySectionWithMarginBottom
-            title={isLoggedIn ? 'Course list' : 'Log in to continue'}
-          >
-            {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
-          </BodySectionWithMarginBottom>
-          <BodySection title='News from the school' />
+        <div className={`App-body ${css(styles.body)}`}>
+          {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+          <BodySection title='News from the School' />
         </div>
-        <Footer />
+        <Footer className={`App-footer ${css(styles.footer)}`} />
       </>
     );
   }
@@ -100,5 +104,19 @@ App.defaultProps = {
   isLoggedIn: false,
   logOut: () => {},
 };
+
+const styles = StyleSheet.create({
+  header: {
+    borderBottom: '1.5px solid rgb(225, 53, 75)',
+  },
+  body: {
+    minHeight: '30vw',
+  },
+  footer: {
+    borderTop: '1.5px solid rgb(224,53,75)',
+    fontStyle: 'italic',
+    textAlign: 'center',
+  },
+});
 
 export default App;

@@ -1,6 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import App from './App';
+import { StyleSheetTestUtils } from 'aphrodite';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('App Component before login', () => {
   let wrapper;
@@ -47,11 +50,18 @@ describe('App Component before login', () => {
 
 describe('App Component after login', () => {
   let wrapper;
+  const mockLogOut = jest.fn();
+  const mockAlert = jest.fn();
 
   // Re-creates wrapper before each test to prevent side-effects or
   // interference between tests
   beforeEach(() => {
-    wrapper = mount(<App isLoggedIn={true} />);
+    global.alert = mockAlert;
+    wrapper = mount(<App isLoggedIn={true} logOut={mockLogOut} />);
+  });
+
+  afterEach(() => {
+    global.alert = window.alert;
   });
 
   // Test that Login is not displayed when logged in
@@ -68,17 +78,11 @@ describe('App Component after login', () => {
     expect(CourseListElement.exists()).toBe(true);
   });
 
-  // test that when ctrl+h are pressed that logOut is called
-  it('calls logOut and alerts when ctrl+h is pressed', () => {
-    const mockLogOut = jest.fn();
-    const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
-    // adjust wrapper
-    wrapper = mount(<App logOut={mockLogOut} />);
-    wrapper.simulate('keydown', { ctrlKey: true, key: 'h' });
-    // run tests
+  // Test that logOut and alert are called when ctrl+h is pressed
+  it('calls logOut and alert when ctrl+h is pressed', () => {
+    const instance = wrapper.instance();
+    instance.handleKeyDown({ key: 'h', ctrlKey: true });
     expect(mockLogOut).toHaveBeenCalled();
     expect(mockAlert).toHaveBeenCalledWith('Logging you out');
-    // restore mocks
-    mockAlert.mockRestore();
   });
 });
