@@ -86,3 +86,41 @@ describe('App Component after login', () => {
     expect(mockAlert).toHaveBeenCalledWith('Logging you out');
   });
 });
+
+describe('App Component displayDrawer state', () => {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = mount(<App />);
+  });
+
+  // Test that the default state for displayDrawer is false
+  it('has a default state of false', () => {
+    expect(wrapper.state().displayDrawer).toBe(false);
+  });
+
+  // Test that displayDrawer's state is true after calling handleDisplayDrawer
+  // and is false after HandleHideDrawer is called
+  it('has a state of true after handleDisplayDrawer is called and a state of false after handleHideDrawer is called', () => {
+    // const instance = wrapper.instance();
+    wrapper.instance().handleDisplayDrawer();
+    expect(wrapper.state().displayDrawer).toBe(true);
+
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state().displayDrawer).toBe(false);
+  });
+
+  it('passes updated displayDrawer state as prop to Notifications', () => {
+    const instance = wrapper.instance();
+
+    // Call handleDisplayDrawer and check if the updated state is passed as a prop
+    instance.handleDisplayDrawer();
+    wrapper.update();
+    expect(wrapper.find('Notifications').prop('displayDrawer')).toBe(true);
+
+    // Call handleHideDrawer and check if the updated state is passed as a prop
+    instance.handleHideDrawer();
+    wrapper.update();
+    expect(wrapper.find('Notifications').prop('displayDrawer')).toBe(false);
+  });
+});

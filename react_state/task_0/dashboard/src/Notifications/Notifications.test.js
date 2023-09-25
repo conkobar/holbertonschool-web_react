@@ -54,8 +54,31 @@ describe('Notifications Component', () => {
   it('renders the first NotificationItem html correctly', () => {
     wrapper.update();
     expect(wrapper.html()).toContain(
-      '<div id="container" class="container_107ja4p"><div class="menuItem menuItem_dacsx2">Your notifications</div><div class="Notifications notifications_1noolwd"><img src="test-file-stub" alt="close icon" style="height: 15px; position: absolute; top: 10px; right: 10px;" aria-label="Close"><p>Here is the list of notifications</p><ul><li class="notification-item" data-notification-type="default">New course available</li><li class="notification-item" data-notification-type="urgent">New resume available</li><li class="notification-item" data-notification-type="urgent"><strong>Urgent requirement</strong> - complete by EOD</li></ul></div></div>'
+      '<div id="container" class="container_518m0s"><div class="menuItem menuItem_1jzwkl fadeBounce_19sn354">Your notifications</div><div class="Notifications notifications_177zlo2}"><img src="test-file-stub" alt="close icon" style="height: 15px; position: absolute; top: 10px; right: 10px;" aria-label="Close"><p>Here is the list of notifications</p><ul class="list_g0ajkh"><li class="listItem_cqra0s default_1tsdo2i" data-notification-type="default">New course available</li><li class="listItem_cqra0s urgent_137u7ef" data-notification-type="urgent">New resume available</li><li class="listItem_cqra0s urgent_137u7ef" data-notification-type="urgent"><strong>Urgent requirement</strong> - complete by EOD</li></ul></div></div>'
     );
+  });
+
+  // Test that handleDisplayDrawer is called when button is clicked
+  it('calls handleDisplayDrawer when Your Notifications is clicked', () => {
+    const handleDisplayDrawer = jest.fn();
+    const wrapper = mount(
+      <Notifications
+        displayDrawer={false}
+        handleDisplayDrawer={handleDisplayDrawer}
+      />
+    );
+    wrapper.find('.menuItem').simulate('click');
+    expect(handleDisplayDrawer).toHaveBeenCalled();
+  });
+
+  // Test that handleHideDrawer is called when button is clicked
+  it('calls handleHideDrawer when the close button is clicked', () => {
+    const handleHideDrawer = jest.fn();
+    const wrapper = mount(
+      <Notifications displayDrawer={true} handleHideDrawer={handleHideDrawer} />
+    );
+    wrapper.find('img[aria-label="Close"]').simulate('click');
+    expect(handleHideDrawer).toHaveBeenCalled();
   });
 });
 
