@@ -26,7 +26,12 @@ class Notifications extends Component {
   }
 
   render() {
-    const { displayDrawer, listNotifications } = this.props;
+    const {
+      displayDrawer,
+      listNotifications,
+      handleDisplayDrawer,
+      handleHideDrawer,
+    } = this.props;
 
     return (
       <div id='container' className={css(styles.container)}>
@@ -34,6 +39,7 @@ class Notifications extends Component {
           className={`menuItem ${css(styles.menuItem)} ${css(
             styles.fadeBounce
           )}`}
+          onClick={handleDisplayDrawer}
         >
           Your notifications
         </div>
@@ -49,9 +55,8 @@ class Notifications extends Component {
                 right: 10,
               }}
               aria-label='Close'
-              onClick={() => console.log('Close button has been clicked')}
+              onClick={handleHideDrawer}
             ></img>
-
             {listNotifications.length > 0 && (
               <p>Here is the list of notifications</p>
             )}
@@ -85,6 +90,8 @@ class Notifications extends Component {
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
   listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  handleDisplayDrawer: PropTypes.func,
+  handleHideDrawer: PropTypes.func,
 };
 
 Notifications.defaultProps = {
