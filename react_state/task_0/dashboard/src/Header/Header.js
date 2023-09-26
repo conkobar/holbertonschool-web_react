@@ -3,19 +3,9 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 const Header = () => (
-  <div
-    className={`App-header ${css(styles.appHeader)}`}
-    style={css(styles.appHeader)}
-  >
-    <img
-      src={logo}
-      className={`App-logo ${css(styles.appLogo)}`}
-      alt='logo'
-      style={css(styles.appLogo)}
-    />
-    <h1 className={`title ${css(styles.title)}`} style={css(styles.title)}>
-      School dashboard
-    </h1>
+  <div className={`App-header ${css(styles.appHeader)}`}>
+    <img src={logo} className={`App-logo ${css(styles.appLogo)}`} alt='logo' />
+    <h1 className={`title ${css(styles.title)}`}>School dashboard</h1>
   </div>
 );
 

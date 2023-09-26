@@ -36,7 +36,7 @@ const defState = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.setState({ ...defState });
+    this.state = { ...defState };
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
   }
@@ -73,10 +73,7 @@ class App extends React.Component {
     // Also added displayDrawer={isLoggedIn} to tie notifications to isLoggedIn
     return (
       <>
-        <div
-          className={`App-header ${css(styles.header)}`}
-          style={css(styles.header)}
-        >
+        <div className={`App-header ${css(styles.header)}`}>
           <Notifications
             listNotifications={listNotifications}
             displayDrawer={displayDrawer}
@@ -85,19 +82,13 @@ class App extends React.Component {
           />
           <Header />
         </div>
-        <div
-          className={`App-body ${css(styles.body)}`}
-          style={css(styles.body)}
-        >
+        <div className={`App-body ${css(styles.body)}`}>
           {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
           <BodySection title='News from the School'>
             <p>React stuff</p>
           </BodySection>
         </div>
-        <Footer
-          className={`App-footer ${css(styles.footer)}`}
-          style={css(styles.footer)}
-        />
+        <Footer className={`App-footer ${css(styles.footer)}`} />
       </>
     );
   }
