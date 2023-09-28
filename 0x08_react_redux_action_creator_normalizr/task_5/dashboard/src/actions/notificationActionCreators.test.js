@@ -3,7 +3,6 @@ import {
   markAsRead,
   setNotificationFilter,
 } from './notificationActionCreators';
-import { NotificationTypeFilters } from '../reducers/notificationReducer';
 
 describe('notificationActionCreators', () => {
   it('should create an action to mark a notification as read', () => {
@@ -16,7 +15,7 @@ describe('notificationActionCreators', () => {
   });
 
   it('should create an action to set the notification filter', () => {
-    const filter = NotificationTypeFilters.DEFAULT;
+    const filter = 'DEFAULT';
     const expectedAction = {
       type: SET_TYPE_FILTER,
       filter,
