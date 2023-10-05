@@ -2,6 +2,10 @@ import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
+import {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+} from '../actions/uiActionCreators';
 import { appReducer } from '../reducers/uiReducer';
 
 // import components
@@ -105,11 +109,9 @@ class App extends React.Component {
   };
 
   render() {
-    const { user, logOut, listNotifications } = this.state;
-    const { displayDrawer } = this.props;
-    // Added key={this.props.isLoggedIn} to force re-render of Notifications component
-    //  This is only necessary because we have the shouldComponentUpdate method in notifications for a different task
-    // Also added displayDrawer={isLoggedIn} to tie notifications to isLoggedIn
+    const { user, listNotifications } = this.state;
+    const { displayDrawer, isLoggedIn, logOut } = this.props;
+
     return (
       <>
         <AppContext.Provider value={{ user, logOut }}>
@@ -119,7 +121,7 @@ class App extends React.Component {
               displayDrawer={displayDrawer}
               handleDisplayDrawer={this.handleDisplayDrawer}
               handleHideDrawer={this.handleHideDrawer}
-              markNotificationAsRead={this.markNotificationAsRead}
+              markNotificationAsRead={this.props.markNotificationAsRead}
             />
             <Header />
           </div>
@@ -127,7 +129,7 @@ class App extends React.Component {
             {user.isLoggedIn ? (
               <CourseList listCourses={listCourses} />
             ) : (
-              <Login logIn={this.logIn} />
+              <Login logIn={this.props.logIn} />
             )}
             <BodySection title='News from the School'>
               <p>React stuff</p>
@@ -143,11 +145,21 @@ class App extends React.Component {
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
   logOut: PropTypes.func,
+  markNotificationAsRead: PropTypes.func,
+  displayDrawer: PropTypes.bool,
+  handleDisplayDrawer: PropTypes.func,
+  handleHideDrawer: PropTypes.func,
+  logIn: PropTypes.func,
 };
 
 App.defaultProps = {
   isLoggedIn: false,
   logOut: () => {},
+  markNotificationAsRead: () => {},
+  displayDrawer: false,
+  handleDisplayDrawer: () => {},
+  handleHideDrawer: () => {},
+  logIn: () => {},
 };
 
 // styles for components
@@ -173,4 +185,10 @@ const mapStateToProps = (state) => {
     state.appReducer.isNotificationDrawerVisible;
 };
 
-export default connect(mapStateToProps)(App);
+// create dispatch handler for notification drawer
+const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

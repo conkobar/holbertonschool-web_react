@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { App, mapStateToProps } from './App';
 import { StyleSheetTestUtils } from 'aphrodite';
-import { appReducer } from '../reducers/uiReducer';
 
 StyleSheetTestUtils.suppressStyleInjection();
 
