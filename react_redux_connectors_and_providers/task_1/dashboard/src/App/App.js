@@ -26,7 +26,6 @@ const listCourses = [
 
 // define a default state
 const defState = {
-  displayDrawer: null,
   user: {
     email: '',
     password: '',
@@ -49,18 +48,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { ...defState };
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
-    this.logIn = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this);
-  }
-
-  handleDisplayDrawer() {
-    this.setState({ displayDrawer: true });
-  }
-
-  handleHideDrawer() {
-    this.setState({ displayDrawer: false });
   }
 
   componentDidMount() {
@@ -69,26 +56,6 @@ class App extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email,
-        password,
-        isLoggedIn: true,
-      },
-    });
-  }
-
-  logOut() {
-    this.setState({
-      user: {
-        email: '',
-        password: '',
-        isLoggedIn: false,
-      },
-    });
   }
 
   markNotificationAsRead(id) {
@@ -110,7 +77,7 @@ class App extends React.Component {
 
   render() {
     const { user, listNotifications } = this.state;
-    const { displayDrawer, isLoggedIn, logOut } = this.props;
+    const { displayDrawer, logOut } = this.props;
 
     return (
       <>
