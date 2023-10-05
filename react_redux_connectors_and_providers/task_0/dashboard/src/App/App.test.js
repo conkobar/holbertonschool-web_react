@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import App from './App';
+import { App, mapStateToProps } from './App';
 import { StyleSheetTestUtils } from 'aphrodite';
 
 StyleSheetTestUtils.suppressStyleInjection();
@@ -60,13 +60,16 @@ describe('App Component after login', () => {
 
   // Re-creates wrapper before each test to prevent side-effects or
   // interference between tests
-  beforeEach(() => {
-    global.alert = mockAlert;
-    wrapper = mount(<App />);
-    wrapper.setState({
-      user: {
+  describe('mapStateToProps function', () => {
+    // tests the mapStateToProps function
+    it('returns the right object when passing the state { isUserLoggedIn: true }', () => {
+      const state = fromJS({
+        isUserLoggedIn: true,
+      });
+      const expectedOutput = {
         isLoggedIn: true,
-      },
+      };
+      expect(mapStateToProps(state)).toEqual(expectedOutput);
     });
   });
 
