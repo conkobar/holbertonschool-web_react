@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  loginRequest,
 } from '../actions/uiActionCreators';
 import { appReducer } from '../reducers/uiReducer';
 
@@ -24,32 +25,8 @@ const listCourses = [
   { id: 3, name: 'React', credit: 40 },
 ];
 
-// define a default state
-const defState = {
-  user: {
-    email: '',
-    password: '',
-    isLoggedIn: false,
-  },
-  listNotifications: [
-    { id: 1, type: 'default', value: 'New course available', html: undefined },
-    { id: 2, type: 'urgent', value: 'New resume available', html: undefined },
-    {
-      id: 3,
-      type: 'urgent',
-      value: undefined,
-      html: { __html: '<strong>Urgent requirement</strong> - complete by EOD' },
-    },
-  ],
-};
-
 // create a React app
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...defState };
-  }
-
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
   }
@@ -76,12 +53,12 @@ class App extends React.Component {
   };
 
   render() {
-    const { user, listNotifications } = this.state;
-    const { displayDrawer, logOut } = this.props;
+    const { user, listNotifications, login } = this.props;
+    const { displayDrawer } = this.props;
 
     return (
       <>
-        <AppContext.Provider value={{ user, logOut }}>
+        <AppContext.Provider value={{ user, logOut: this.props.logOut }}>
           <div className={`App-header ${css(styles.header)}`}>
             <Notifications
               listNotifications={listNotifications}
@@ -96,7 +73,7 @@ class App extends React.Component {
             {user.isLoggedIn ? (
               <CourseList listCourses={listCourses} />
             ) : (
-              <Login logIn={this.props.logIn} />
+              <Login logIn={login} />
             )}
             <BodySection title='News from the School'>
               <p>React stuff</p>
@@ -116,7 +93,7 @@ App.propTypes = {
   displayDrawer: PropTypes.bool,
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
-  logIn: PropTypes.func,
+  login: PropTypes.func,
 };
 
 App.defaultProps = {
@@ -126,7 +103,7 @@ App.defaultProps = {
   displayDrawer: false,
   handleDisplayDrawer: () => {},
   handleHideDrawer: () => {},
-  logIn: () => {},
+  login: () => {},
 };
 
 // styles for components
@@ -156,6 +133,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  login: loginRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
