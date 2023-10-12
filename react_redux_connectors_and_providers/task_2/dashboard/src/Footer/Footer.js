@@ -1,11 +1,10 @@
 import { checkIsIndex, getFooterCopy, getFullYear } from '../utils/utils';
-import React, { useContext } from 'react';
+import React from 'react';
 import './Footer.css';
-import AppContext from '../App/AppContext';
+import { connect } from 'react-redux';
 
 // component for footer
-const Footer = () => {
-  const { user } = useContext(AppContext);
+const Footer = ({ user }) => {
   return (
     <div className='App-footer'>
       <p>
@@ -20,4 +19,10 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Footer);
