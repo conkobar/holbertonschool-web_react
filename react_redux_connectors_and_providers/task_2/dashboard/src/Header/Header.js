@@ -1,10 +1,10 @@
 import logo from '../assets/logo.jpg';
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import AppContext from '../App/AppContext';
+import { connect } from 'react-redux';
+import { logout } from '../actions/uiActionCreators';
 
-const Header = () => {
-  const { user, logOut } = useContext(AppContext);
+const Header = ({ user, logout }) => {
   return (
     <div className={`App-header ${css(styles.appHeader)}`}>
       <img
@@ -16,7 +16,7 @@ const Header = () => {
       {user.isLoggedIn && (
         <div id='logoutSection'>
           Welcome {user.email} (
-          <a href='#' onClick={logOut}>
+          <a href='#' onClick={logout}>
             Logout
           </a>
           )
@@ -24,6 +24,16 @@ const Header = () => {
       )}
     </div>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = {
+  logout,
 };
 
 const styles = StyleSheet.create({
@@ -44,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
