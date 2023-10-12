@@ -10,7 +10,6 @@ import {
 import { appReducer } from '../reducers/uiReducer';
 
 // import components
-import Notifications from '../Notifications/Notifications';
 import Login from '../Login/Login';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -35,15 +34,6 @@ class App extends React.Component {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  markNotificationAsRead(id) {
-    const { listNotifications } = this.state;
-    this.setState({
-      listNotifications: listNotifications.filter((item) => {
-        item.id !== id;
-      }),
-    });
-  }
-
   handleKeyDown = (event) => {
     console.log('A key was pressed', event.key);
     if (event.ctrlKey && event.key === 'h') {
@@ -53,20 +43,12 @@ class App extends React.Component {
   };
 
   render() {
-    const { user, listNotifications, login } = this.props;
-    const { displayDrawer } = this.props;
+    const { user, login } = this.props;
 
     return (
       <>
         <AppContext.Provider value={{ user, logOut: this.props.logOut }}>
           <div className={`App-header ${css(styles.header)}`}>
-            <Notifications
-              listNotifications={listNotifications}
-              displayDrawer={displayDrawer}
-              handleDisplayDrawer={this.handleDisplayDrawer}
-              handleHideDrawer={this.handleHideDrawer}
-              markNotificationAsRead={this.props.markNotificationAsRead}
-            />
             <Header />
           </div>
           <div className={`App-body ${css(styles.body)}`}>
@@ -89,7 +71,6 @@ class App extends React.Component {
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
   logOut: PropTypes.func,
-  markNotificationAsRead: PropTypes.func,
   displayDrawer: PropTypes.bool,
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
@@ -99,7 +80,6 @@ App.propTypes = {
 App.defaultProps = {
   isLoggedIn: false,
   logOut: () => {},
-  markNotificationAsRead: () => {},
   displayDrawer: false,
   handleDisplayDrawer: () => {},
   handleHideDrawer: () => {},

@@ -4,10 +4,16 @@ import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
 import NotificationItemShape from './NotificationItemShape';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
+import { fetchNotifications } from '../actions/notificationActionCreators';
 
 class Notifications extends PureComponent {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.fetchNotifications();
   }
 
   componentDidUpdate() {
@@ -15,12 +21,8 @@ class Notifications extends PureComponent {
   }
 
   render() {
-    const {
-      displayDrawer,
-      listNotifications,
-      handleDisplayDrawer,
-      handleHideDrawer,
-    } = this.props;
+    const { displayDrawer, messages, handleDisplayDrawer, handleHideDrawer } =
+      this.props;
 
     return (
       <div id='container' className={css(styles.container)}>
@@ -46,14 +48,12 @@ class Notifications extends PureComponent {
               aria-label='Close'
               onClick={handleHideDrawer}
             ></img>
-            {listNotifications.length > 0 && (
-              <p>Here is the list of notifications</p>
-            )}
+            {messages.length > 0 && <p>Here is the list of notifications</p>}
             <ul className={css(styles.list)}>
-              {listNotifications.length === 0 ? (
+              {messages.length === 0 ? (
                 <p>No new notification for now</p>
               ) : (
-                listNotifications.map(({ type, html, value, id }) => (
+                messages.map(({ type, html, value, id }) => (
                   <NotificationItem
                     key={id}
                     type={type}
@@ -78,16 +78,18 @@ class Notifications extends PureComponent {
 
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
-  listNotifications: PropTypes.arrayOf(NotificationItemShape),
+  messages: PropTypes.arrayOf(NotificationItemShape),
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
+  fetchNotifications: PropTypes.func,
 };
 
 Notifications.defaultProps = {
   displayDrawer: false,
-  listNotifications: [],
+  messages: [],
   handleDisplayDrawer: () => {},
   handleHideDrawer: () => {},
+  fetchNotifications: () => {},
 };
 
 const styles = StyleSheet.create({
@@ -149,4 +151,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notifications;
+const mapStateToProps = (state) => ({
+  messages: state.notifications,
+});
+
+const mapDispatchToProps = {
+  fetchNotifications,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
